@@ -55,11 +55,27 @@ app.post("/", async (req, res) => {
       amount,
       category,
     });
+
     await newExpense.save();
+
     console.log(newExpense);
+
     res.redirect("/");
   } catch (err) {
     console.log(err);
+  }
+});
+
+app.get("/delete/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const expense = await Expense.findByIdAndDelete(id);
+    console.log("deleted expense =>", expense);
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    res.redirect("/");
   }
 });
 
